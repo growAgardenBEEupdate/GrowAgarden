@@ -1,42 +1,58 @@
--- Dupe Script GUI
-local dupeSriptGUI = Instance.new("ScreenGui")
-dupeSriptGUI.Name = "DupeScriptGUI"
-dupeSriptGUI.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Load Orion Library
+local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/GRPGaming/Key-System/refs/heads/Xycer-Hub-Script/ZusumeLib(Slider)"))()
 
--- Main Frame
-local mainFrame = Instance.new("Frame")
-mainFrame.Name = "MainFrame"
-mainFrame.Size = UDim2.new(0.3, 0, 0.2, 0)
-mainFrame.Position = UDim2.new(0.35, 0, 0.4, 0)
-mainFrame.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-mainFrame.BorderSizePixel = 0
-mainFrame.Parent = dupeSriptGUI
+-- Create the main window
+local Window = OrionLib:MakeWindow({
+    Name = "Main Hack",
+    HidePremium = false,
+    SaveConfig = true,
+    ConfigFolder = "OrionHackConfig"
+})
 
--- Title Label
-local titleLabel = Instance.new("TextLabel")
-titleLabel.Name = "TitleLabel"
-titleLabel.Text = "Dupe Script"
-titleLabel.Size = UDim2.new(1, 0, 0.2, 0)
-titleLabel.BackgroundTransparency = 1
-titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-titleLabel.Font = Enum.Font.SourceSansBold
-titleLabel.TextSize = 20
-titleLabel.Parent = mainFrame
+-- Create a tab
+local Tab = Window:MakeTab({
+    Name = "Main Hack",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
 
--- Dupe Button
-local dupeButton = Instance.new("TextButton")
-dupeButton.Name = "DupeButton"
-dupeButton.Text = "Activate Dupe"
-dupeButton.Size = UDim2.new(0.8, 0, 0.4, 0)
-dupeButton.Position = UDim2.new(0.1, 0, 0.5, 0)
-dupeButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
-dupeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-dupeButton.Font = Enum.Font.SourceSans
-dupeButton.TextSize = 16
-dupeButton.Parent = mainFrame
+-- Add a Toggle
+Tab:AddToggle({
+    Name = "Dupe all",
+    Default = false,
+    Save = true,
+    Flag = "dupeAll",
+    Callback = function(Value)
+        print("Dupe all toggle is now:", Value)
+        -- You can add your dupe logic here
+        if Value then
+            -- Dupe all items
+            -- Your dupe all logic goes here
+        else
+            -- Stop duping all items
+            -- Your stop dupe all logic goes here
+        end
+    end
+})
 
--- Dupe Button Click Event
-dupeButton.MouseButton1Click:Connect(function()
-    -- Add your dupe script logic here
-    print("Dupe script activated!")
-end)
+-- Add a Slider
+Tab:AddSlider({
+    Name = "Dupe them",
+    Min = 1,
+    Max = 100,
+    Default = 10,
+    Color = Color3.fromRGB(255, 255, 255),
+    Increment = 1,
+    ValueName = "Items",
+    Save = true,
+    Flag = "dupeThem",
+    Callback = function(Value)
+        print("Slider set to:", Value)
+        -- You can add your dupe amount logic here
+        -- Dupe the specified number of items
+        -- Your dupe amount logic goes here
+    end
+})
+
+-- Finalize UI
+OrionLib:Init()
